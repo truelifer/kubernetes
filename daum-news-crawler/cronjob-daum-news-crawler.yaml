@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: daum-news-crawler
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: daum-news-crawler
+              image: truelifer-registry.com:8090/daum_news_crawler:latest
+              env:
+                - name: DAUM_NEWS_CRAWLER_DB_USER
+                  valueFrom:
+                    configMapKeyRef:
+                      name: configmap-daum-news-crawler
+                      key: DAUM_NEWS_CRAWLER_DB_USER
+                - name: DAUM_NEWS_CRAWLER_DB
+                  valueFrom:
+                    configMapKeyRef:
+                      name: configmap-daum-news-crawler
+                      key: DAUM_NEWS_CRAWLER_DB
+                - name: DAUM_NEWS_CRAWLER_DB_HOST
+                  valueFrom:
+                    configMapKeyRef:
+                      name: configmap-daum-news-crawler
+                      key: DAUM_NEWS_CRAWLER_DB_HOST
+                - name: DAUM_NEWS_CRAWLER_DB_PORT
+                  valueFrom:
+                    configMapKeyRef:
+                      name: configmap-daum-news-crawler
+                      key: DAUM_NEWS_CRAWLER_DB_PORT
+                - name: DAUM_NEWS_CRAWLER_DB_PW
+                  valueFrom:
+                    secretKeyRef:
+                      name: secret-daum-news-crawler
+                      key: DAUM_NEWS_CRAWLER_DB_PW
