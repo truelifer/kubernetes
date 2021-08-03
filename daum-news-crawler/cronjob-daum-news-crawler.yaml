@@ -3,7 +3,8 @@ kind: CronJob
 metadata:
   name: daum-news-crawler
 spec:
-  schedule: "*/1 * * * *"
+  schedule: "* */1 * * *"
+  concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
