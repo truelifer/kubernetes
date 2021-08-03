@@ -22,6 +22,8 @@ spec:
               mountPath: /var/jenkins_home
             - name: docker-socket
               mountPath: /var/run/docker.sock
+            - name: docker-binary
+              mountPath: /usr/bin/docker
       volumes:
         - name: jenkins-home
           persistentVolumeClaim:
@@ -29,3 +31,6 @@ spec:
         - name: docker-socket
           hostPath:
             path: /var/run/docker.sock
+        - name: docker-binary
+          hostPath:
+            path: /usr/bin/docker
